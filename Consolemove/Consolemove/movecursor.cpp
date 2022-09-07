@@ -2,7 +2,6 @@
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
-#include <thread>
 #include "movecursor.h"
 
 void setCursor(int tf) {
@@ -13,11 +12,11 @@ void setCursor(int tf) {
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 
-void gotoCursor(int xg, int yg) {
+void gotoCursor(int x, int y) {
     HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD pos;
-    pos.X = xg;
-    pos.Y = yg;
+    pos.X = x;
+    pos.Y = y;
     SetConsoleCursorPosition(consoleHandle, pos);
 }
 
@@ -29,7 +28,7 @@ void getCursorPosition(int num) {
     gotoCursor(presentCur.dwCursorPosition.X, presentCur.dwCursorPosition.Y);
 }
 
-void mPause() {
+void cursorPause() {
     char stop;
     char start;
     int num=0;
@@ -50,61 +49,32 @@ void mPause() {
     }
 }
 
-void moveCursor(int x, int y, int s) {
-    int time = 100/s;
-    int count = 0;
-    const char* c = "1";
-    for (int i = 0; i < (y / 2) + 1; i++)
-    {
-        for (int j = i; j < x - i; j++) {   //왼쪽에서 오른쪽
-            if (count >= x * y) {
-                break;
-            }
-            wprintf_s(L"\x1b[1C");
-            Sleep(time);
-            mPause();
-            count++;
-            cout << c;
-        }
+void moveCursor(int width, int height, int &x,int &y,int &i) {
+    if (x <= width - i - 1 && y == i) { //우
+        wprintf_s(L"\x1b[1C");
+        x++;
+    }
 
-        for (int j = i + 1; j < y - i; j++) {   //위에서 아래
-            if (count >= x * y) {
-                break;
-            }
-            wprintf_s(L"\x1b[1B");
-            wprintf_s(L"\x1b[1D");
-            Sleep(time);
-            mPause();
-            count++;
-            cout << c;
-        }
+    else if (y < height - i - 1 && x == width - i) {//하
+        wprintf_s(L"\x1b[1B");
+        wprintf_s(L"\x1b[1D");
+        y++;
+    }
 
-        for (int j = x - i - 2; j >= i; j--) {  //오른쪽에서 왼쪽
-            if (count >= x * y) {
-                break;
-            }
-            wprintf_s(L"\x1b[3D");
-            Sleep(time);
-            mPause();
-            count++;
-            cout << c;
-        }
+    else if (x > i + 1 && y == height - i - 1) {//좌
+        wprintf_s(L"\x1b[3D");
+        x--;
+    }
 
-        for (int j = y - i - 2; j >= i + 1; j--) {  //아래에서 위
-            if (count >= x * y) {
-                break;
-            }
-            wprintf_s(L"\x1b[1A");
-            wprintf_s(L"\x1b[1D");
-            Sleep(time);
-            mPause();
-            count++;
-            cout << c;
+    else if (y > i + 1 && x == i + 1) {//상
+        wprintf_s(L"\x1b[1A");
+        wprintf_s(L"\x1b[1D");
+        y--;
+        if (y == i + 1) {
+            i++;
         }
     }
-    wprintf_s(L"\x1b[1D");
 }
-
 void flashing() {
     int on_off = 0;
     while (true)

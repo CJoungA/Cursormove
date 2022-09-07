@@ -1,27 +1,41 @@
 ﻿#include <iostream>
 #include <windows.h>
-#include <conio.h>
-#include <thread>
 #include "movecursor.h"
 
 int main() {
-    int x, y, s;
-    int num = 1;
-    int on_off = 0;
+    int width, height, s;
 
     cout << "가로, 세로, 속도(1~5 범위를 벗어나면 5고정)를 입력하세요: ";
-    cin >> x >> y >> s;
+
+    cin >> width >> height >> s;
     if (s < 0 || s >= 5) {
         s = 5;
     }
+    int time = 1000 / s;
 
     setCursor(0);
 
     system("cls");//콘솔내용 지우기
 
-    moveCursor(x, y, s);
+    const char* c = "1";
 
-    flashing();
+    int i = 0;
+    int x = 0;
+    int y = 0;
+
+    while (true) {
+        int count = 0;
+        moveCursor(width,height,x,y,i);
+        cursorPause();
+        cout << c;
+        Sleep(time);
+        count++;
+        if (count == width * height) {
+            wprintf_s(L"\x1b[1D");
+            flashing();
+            break;
+        }
+    }
 
     return 0;
 }
