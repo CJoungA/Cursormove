@@ -7,8 +7,7 @@
 void setCursor(int tf) {
     CONSOLE_CURSOR_INFO cursorInfo = { 0, };
     cursorInfo.dwSize = 100;  //커서 두께(1~100)
-    cursorInfo.bVisible = 0;  //TRUE커서 보이게 //FALSE숨기기
-
+    cursorInfo.bVisible = tf;  //TRUE커서 보이게 //FALSE숨기기
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 }
 

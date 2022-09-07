@@ -13,7 +13,7 @@ int main() {
     }
     int time = 1000 / s;
 
-    setCursor(0);
+    setCursor(0);  //0 커서 숨기기 ,1 커서 보이기
 
     system("cls");//콘솔내용 지우기
 
