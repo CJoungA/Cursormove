@@ -9,7 +9,7 @@ void setCursor(int c);
 void gotoCursor(int x, int y);
 void cursorPause(); // 정지
 void moveCursor(int width, int height, int &x, int &y, int &i); //커서 이동 및 출력
-void getCursorPosition(int num);
-void flashing();
+void cursorPrint(int num);
+void cursorFlashing();
 
 #endif

@@ -33,7 +33,7 @@ int main() {
         count++;
         if (count == width * height) {
             wprintf_s(L"\x1b[1D");
-            flashing();
+            cursorFlashing();
             break;
         }
     }

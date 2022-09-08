@@ -19,7 +19,7 @@ void gotoCursor(int x, int y) {
     SetConsoleCursorPosition(consoleHandle, pos);
 }
 
-void getCursorPosition(int num) {
+void cursorPrint(int num) {
     const char* msgs[2] = { "1"," "};
     CONSOLE_SCREEN_BUFFER_INFO presentCur;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &presentCur);
@@ -32,7 +32,7 @@ void cursorPause() {
     char start;
     if (_kbhit()) {
         stop = _getch();
-        flashing();
+        cursorFlashing();
         while (true) {
             if (stop == 32) {
                 start = _getch();
@@ -73,15 +73,15 @@ void moveCursor(int width, int height, int &x,int &y,int &i) {
         }
     }
 }
-void flashing() {
+void cursorFlashing() {
     int on_off = 0;
     while (true)
     {
-        getCursorPosition(on_off);
+        cursorPrint(on_off);
         on_off = (on_off + 1) % 2;
         Sleep(250);
         if (_kbhit()) {
-            getCursorPosition(0);
+            cursorPrint(0);
             break;
         }
     }
