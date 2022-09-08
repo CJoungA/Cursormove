@@ -11,7 +11,7 @@ int main() {
     if (s < 0 || s >= 5) {
         s = 5;
     }
-    int time = 1000 / s;
+    int time = 1000 / s; 
 
     setCursor(0);  //0 커서 숨기기 ,1 커서 보이기
 
@@ -19,12 +19,13 @@ int main() {
 
     const char* c = "1";
 
-    int i = 0;
+    int i = 0; 
     int x = 0;
     int y = 0;
+    int count = 0;
 
     while (true) {
-        int count = 0;
+
         moveCursor(width,height,x,y,i);
         cursorPause();
         cout << c;

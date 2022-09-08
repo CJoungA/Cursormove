@@ -30,7 +30,6 @@ void getCursorPosition(int num) {
 void cursorPause() {
     char stop;
     char start;
-    int num=0;
     if (_kbhit()) {
         stop = _getch();
         flashing();
